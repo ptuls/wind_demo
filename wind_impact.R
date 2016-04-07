@@ -12,7 +12,7 @@ wind.data.sa <- read.csv("~/Documents/Power/wind_data_sa.csv", sep=',')
 wind.data.sa$DATE <- as.POSIXct(wind.data.sa$DATE, format = "%Y/%m/%d %H:%M:%S", tz="EST")
 
 # assume that the small negative values are due to measurement error
-wind.data.sa[is.na(wind.data.sa[, 2:ncol(wind.data.sa)])] <- 0
+wind.data.sa[is.na(wind.data.sa)] <- 0
 wind.data.sa[wind.data.sa < 0] <- 0
 
 # combine to form total sum
@@ -55,6 +55,6 @@ plot.series[plot.series$DATE >= start_time2 & plot.series$DATE <= end_time2, ]$L
 
 # plot the results
 p <- ggplot(plot.series, aes(x=REDUCE, fill=LAB)) + geom_density(alpha=0.5) + xlab("% Reduction") 
-p <- p + ylab("Density") + ggtitle("Reduction in Energy Demand due to Wind Energy 2015") 
+p <- p + ylab("Density") + ggtitle("Reduction in Energy Demand due to Wind Energy (2015)") 
 p <- p + scale_fill_discrete(name="Legend", breaks=c("s", "w"), labels=c("Summer", "Winter"))
 print(p)

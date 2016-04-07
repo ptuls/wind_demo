@@ -11,7 +11,8 @@ wind.data.sa <- read.csv("~/Documents/Power/wind_data_sa.csv", sep=",")
 # interpolate if need be
 # wind.data.sa.linear <- na.approx(wind.data.sa)
 # wind.data.sa.spline <- na.approx(wind.data.sa)
-# wind.data.sa.zeroed[is.na(wind.data.sa)] <- 0
+wind.data.sa.zeroed <- 0
+wind.data.sa.zeroed[is.na(wind.data.sa)] <- 0
 
 # first check out the correlations; plot them for visualisation
 temp <- na.omit(wind.data.sa)

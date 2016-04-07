@@ -3,6 +3,7 @@ library(dplyr)
 library(reshape2)
 library(zoo)
 library(lubridate)
+library(magrittr)
 
 # read data
 wind.data.sa <- read.csv("~/Documents/Power/wind_data_sa.csv", sep=",")
@@ -38,7 +39,7 @@ names(combustion.generation) <- c("DATE", "TOTAL")
 # choose from row 5 onwards to match on the hour with price and demand data
 agg <- "1 hour"
 wind.generation <- wind.generation[5:nrow(wind.generation), ] %>% group_by(DATE = cut(DATE, 
-                           breaks=agg)) %>% summarize(TOTAL = sum(TOTAL))
+                   breaks=agg)) %>% summarize(TOTAL = sum(TOTAL))
 wind.generation$DATE <- as.POSIXct(wind.generation$DATE, format="%Y-%m-%d %H:%M:%S", tz="EST")
 
 # do the same for combustion
@@ -55,9 +56,11 @@ end_date1 <- as.POSIXct("2016-03-01 00:00:00", tz="EST") + minutes(30)
 plot.series.summer <- percentage.generation[percentage.generation$DATE >= start_date1 & percentage.generation$DATE <= end_date1, ]
 plot.series.summer$LABEL <- rep("s")
 
+day <- 24
+week <- 7*day
 p <- ggplot(plot.series.summer, aes(x=DATE, y=PC)) + geom_line(colour = "blue") + xlab("Hourly Interval (Eastern Standard Time)")
 p <- p + ylab("%") + ggtitle("South Australian Windfarm Output Percentage of Total Output (Summer 2015)")
-p <- p + stat_smooth(formula = mean, color="red", n = 7*24, se = T)
+p <- p + stat_smooth(formula = mean, color="red", n = week, se = T)
 print(p)
 
 start_date2 <- as.POSIXct("2015-06-01 00:00:00", tz = "EST") + minutes(30)

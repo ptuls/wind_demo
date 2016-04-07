@@ -41,8 +41,8 @@ wind.group.generation <- wind.group.data[5:nrow(wind.group.data), ] %>% group_by
                          SOUTHERN = sum(SOUTHERN)/energy_conversion)
 wind.group.generation$DATE <- as.POSIXct(wind.group.generation$DATE, format="%Y-%m-%d %H:%M:%S", tz="EST")
 
-wind.group.data.melt <- melt(wind.group.generation[wind.group.generation$DATE >= start_date & wind.group.generation$DATE 
-                                                   <= end_date, ], id.vars="DATE")
+wind.group.data.melt <- melt(wind.group.generation[wind.group.generation$DATE >= start.date & wind.group.generation$DATE 
+                                                   <= end.date, ], id.vars="DATE")
 
 # plot figure
 p <- ggplot(wind.group.data.melt, aes(DATE, value, col=variable)) + geom_line() + xlab("Date (Eastern Standard Time)")

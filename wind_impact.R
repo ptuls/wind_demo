@@ -54,7 +54,7 @@ plot.series$LAB <- rep("s")
 plot.series[plot.series$DATE >= start_time2 & plot.series$DATE <= end_time2, ]$LAB <- rep("w")
 
 # plot the results
-p <- ggplot(plot.series, aes(x=REDUCE, fill=LAB)) + geom_density(alpha=0.5) + xlab("% Reduction") 
-p <- p + ylab("Density") + ggtitle("Reduction in Energy Demand due to Wind Energy (2015)") 
+p <- ggplot(plot.series, aes(x=REDUCE, fill=LAB)) + geom_density(alpha=0.5) + xlab("% Serviced") 
+p <- p + ylab("Density") + ggtitle("Serviced Energy Demand due to Wind (2015)") 
 p <- p + scale_fill_discrete(name="Legend", breaks=c("s", "w"), labels=c("Summer", "Winter"))
 print(p)

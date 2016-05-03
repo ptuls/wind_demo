@@ -31,13 +31,13 @@ i. Quite a bit missing from CNUNDAWF (Canunda) and STARTHLWF (Starfish Hill), e.
 ii. Some missing bits from BLUFF1 (The Bluff), e.g., rows 11378 to 11384 06/03/2015 12:10 to 12:40
 iii. Some missing data from MTMLLAR (Mount Millar), e.g., rows 105217 to 105218 27/01/2016 8:05 to 8:10
 iv. Occasional missing data rows from several windfarms CATHROCK (Cathedral Rock), CNUNDAWF (Canunda), LKBONNY1 (Lake Bonny 1), MTMILLAR (Mount Millar), STARHLWF (Starfish Hill), WPWF (Wattle Point), e.g., row 112159 20/02/2016 10:35 
-v. Counts of missing data (total current number of entries: 118368)
-CATHROCK 	100	0.081%
-CNUNDAWF 	582	0.477%
-LKBONNY1 	182	0.148%
-MTMILLAR 	90	0.073%
-STARHLWF 	501	0.406%
-WPWF 		47	0.038%
+v. Counts of missing data (total current number of entries: 131328)
+CATHROCK 	101	0.077%
+CNUNDAWF 	606	0.461%
+LKBONNY1 	182	0.139%
+MTMILLAR 	90	0.069%
+STARHLWF 	513	0.391%
+WPWF 		48	0.037%
 
 3. Duplicates
 i. Some raw data files repeat information from some windfarms.

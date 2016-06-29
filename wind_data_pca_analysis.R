@@ -1,4 +1,4 @@
-# Perform a simple correlation, PCA and factor analysis on the data of wind power production
+# Perform a simple correlation, PCA on the data of wind power production
 # per 5 minutes
 
 library(ggplot2)
@@ -19,6 +19,8 @@ wind.data.sa <- read.csv("~/Documents/Power/wind_data_sa.csv", sep=",")
 
 # perform PCA
 # note: na.action will not work if formula is not included
+# no difference between interpolated version vs. dropping missing data, since
+# we're looking at the spatial correlation matrix (we have enough data points)
 wind.pca <- prcomp(~., data=wind.data.sa[, 2:ncol(wind.data.sa)], center=TRUE, scale.=TRUE, na.action = na.omit)
 
 p <- ggbiplot(wind.pca, choices=1:2, scale = 1,  obs.scale = 0, var.scale = 1, circle = TRUE, alpha = 0.0)

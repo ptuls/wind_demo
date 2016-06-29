@@ -1,3 +1,6 @@
+# plot the windfarm energy production output for the three AEMO windfarm 
+# groups: the Coastal, Midnorth and Southern groups
+
 library(ggplot2)
 library(dplyr)
 library(reshape2)
@@ -42,33 +45,35 @@ wind.group.generation$DATE <- as.POSIXct(wind.group.generation$DATE, format="%Y-
 
 
 # remember: SA time is half an hour behind EST
+# change start_date and end_date to obtain the different seasons; here, we
+# set the dates for summer of 2015
 summer_start <- "2015-12-01 00:00:00"
 summer_end <- "2016-03-01 00:00:00"
-# start.date <- as.POSIXct("2015-06-01 00:00:00", tz = "EST") + minutes(30)
-# end.date <- as.POSIXct("2015-09-01 00:00:00", tz = "EST") + minutes(30)
+
 start.date <- as.POSIXct(summer_start, tz = "EST") + minutes(30)
 end.date <- as.POSIXct(summer_end, tz = "EST") + minutes(30)
 
 wind.group.data.melt <- melt(wind.group.generation[wind.group.generation$DATE >= start.date & wind.group.generation$DATE 
                                                    <= end.date, ], id.vars="DATE")
 
-# plot figure
-p <- ggplot(wind.group.data.melt, aes(DATE, value, col=variable)) + geom_line() + xlab("Date (Eastern Standard Time)")
-p <- p + ylab("Energy (MWh)") + ggtitle("South Australian Windfarm Group Output (June 2015)")
+# plot figure for the three windfarm groups according to the official AEMO classification
+p <- ggplot(wind.group.data.melt, aes(DATE, value, col=variable)) + geom_line() + xlab("Date")
+p <- p + ylab("Energy (MWh)") + ggtitle("South Australian Windfarm Group Output (Summer 2015)")
 p <- p + scale_color_discrete(name="Legend", breaks=c("COASTAL", "MIDNORTH", "SOUTHERN"), 
-                              labels=c("Coastal", "Midnorth", "Southern"))
+                              labels=c("Coastal", "Midnorth", "Southern")) + theme_minimal()
 print(p)
 
 # plot output densities
 p1 <- ggplot(wind.group.data.melt, aes(value, fill=variable)) + geom_density(alpha = 0.3) + xlab("Energy (MWh)")
-p1 <- p1 + ylab("Density") + ggtitle("South Australian Windfarm Group Output (Winter 2015)")
+p1 <- p1 + ylab("Density") + ggtitle("South Australian Windfarm Group Output (Summer 2015)")
 p1 <- p1 + scale_fill_discrete(name="Legend", breaks=c("COASTAL", "MIDNORTH", "SOUTHERN", "TOTAL"), 
                               labels=c("Coastal", "Midnorth", "Southern", "Total")) + theme_minimal()
 print(p1)
 
 
-start.date <- as.POSIXct("2016-01-11 00:00:00", tz = "EST") + minutes(30)
-end.date <- as.POSIXct("2016-01-20 00:00:00", tz = "EST") + minutes(30)
+# redo the functions; sometimes melt gets wonky 
+start.date <- as.POSIXct(summer_start, tz = "EST") + minutes(30)
+end.date <- as.POSIXct(summer_end, tz = "EST") + minutes(30)
 
 wind.coastal <- data.frame(wind.data.sa$DATE, wind.data.sa$CATHROCK, wind.data.sa$STARHLWF, wind.data.sa$WPWF, wind.data.sa$COASTAL)
 names(wind.coastal) <- c("DATE", "CATHROCK", "STARHLWF", "WPWF", "COASTAL")
@@ -84,8 +89,9 @@ wind.coastal.generation$DATE <- as.POSIXct(wind.coastal.generation$DATE, format=
 wind.coastal.melt <- melt(wind.coastal.generation[wind.coastal.generation$DATE >= start.date & wind.coastal.generation$DATE 
                                                    <= end.date, ], id.vars="DATE")
 
-p2 <- ggplot(wind.coastal.melt, aes(DATE, value, col=variable)) + geom_line() + xlab("Date (Eastern Standard Time)")
+# plot the wind energy production for the coastal group
+p2 <- ggplot(wind.coastal.melt, aes(DATE, value, col=variable)) + geom_line() + xlab("Date")
 p2 <- p2 + ylab("Energy (MWh)") + ggtitle("Coastal Group Output")
 p2 <- p2 + scale_color_discrete(name="Legend", breaks=c("CATHROCK", "STARHLWF", "WPWF", "COASTAL"), 
-                               labels=c("Cathedral Rock", "Starfish Hill", "Wattle Point", "Total")) + theme_minimal()
+                               labels=c("Cathedral Rock", "Starfish Hill", "Wattle Point", "Coastal Total")) + theme_minimal()
 print(p2)

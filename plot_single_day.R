@@ -4,15 +4,21 @@ library(dplyr)
 library(ggplot2)
 library(reshape2)
 library(lubridate)
+library(zoo)
 
 # load data
-wind.data.sa <- read.csv("~/Documents/Power/wind_data_sa.csv", sep=',')
+# directory <- "~/Documents/Power/wind_data_sa.csv"
+directory <- "~/wind_demo/data/wind_data_sa.csv"
+wind.data.sa <- read.csv(directory, sep=',')
 
 # set timezone to official AEMO standard, the Eastern Standard Time (EST)
 wind.data.sa$DATE <- as.POSIXct(wind.data.sa$DATE, format = "%Y/%m/%d %H:%M:%S", tz="EST")
 
 # assume that the small negative values are due to measurement error
 wind.data.sa[wind.data.sa < 0] <- 0
+
+# linear interpolation
+wind.data.sa <- na.approx(wind.data.sa)
 
 # combine to form total sum
 wind.data.sa$TOTAL <- rowSums(wind.data.sa[, 2:ncol(wind.data.sa)])
@@ -30,7 +36,7 @@ names(wind.generation) <- c("DATE", "TOTAL")
 agg <- "30 min"
 energy.conversion <- 12
 wind.generation <- wind.generation[5:nrow(wind.generation), ] %>% group_by(DATE = cut(DATE, 
-                               breaks=agg)) %>% summarize(TOTAL = sum(TOTAL, na.rm=na.omit)/energy.conversion)
+                               breaks=agg)) %>% summarize(TOTAL = sum(TOTAL)/energy.conversion)
 # date format has changed; change it back to POSIX standard
 wind.generation$DATE <- as.POSIXct(wind.generation$DATE, format="%Y-%m-%d %H:%M:%S", tz="EST")
 
@@ -43,12 +49,12 @@ wind.generation$DEMAND <- price.demand.sa[as.POSIXct(price.demand.sa$Date, tz="E
                                             as.POSIXct(price.demand.sa$Date, tz = "EST") <= end_time, ]$Demand
 wind.generation$NET_DEMAND <- wind.generation$DEMAND - wind.generation$TOTAL
 
-# want to plot them on the same plot
+# want to plot them on the same plot, so we melt
 wind.generation.melt <- melt(wind.generation, id.vars="DATE")
 
 # plot the results
-p <- ggplot(wind.generation.melt, aes(DATE, value, col=variable)) + geom_line() + xlab("Date (Eastern Standard Time)") 
+p <- ggplot(wind.generation.melt, aes(DATE, value, col=variable)) + geom_line() + xlab("Date") 
 p <- p + ylab("Energy (MWh)") + ggtitle("South Australian Electricity Wind Output and Demand (Week Starting 24 Dec 2015)")
 p <- p + scale_color_discrete(name="Legend", breaks=c("TOTAL", "DEMAND", "NET_DEMAND"), 
-                                labels=c("Total", "Demand", "Net Demand"))
+                                labels=c("Total Wind Energy", "Demand", "Net Demand")) + theme_minimal()
 print(p)

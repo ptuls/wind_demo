@@ -1,5 +1,4 @@
-Information
-===========
+# Information
 
 1. Raw data obtained from
 http://www.nemweb.com.au/REPORTS/ARCHIVE/Dispatch_SCADA/
@@ -21,10 +20,9 @@ The rest of the columns are the 32 combustion generation units arranged in alpha
 5. Timezones: all AEMO data is standardised on Eastern Standard Time (EST).
 
 
-ISSUES
-======
-wind_data_sa.csv
-================
+# ISSUES
+## wind_data_sa.csv
+
 1. What does negative generation mean?
 2. Missing information
 i. Quite a bit missing from CNUNDAWF (Canunda) and STARTHLWF (Starfish Hill), e.g., rows 10245 to 10261 02/03/2015 13:45 to 15:05
@@ -46,8 +44,8 @@ farms: Snowtown Stage 2 North (SNOWNTH1) and Snowtown Stage 2 South
 (SNOWSTH1)
 
 
-combustion_data_sa.csv
-======================
+## combustion_data_sa.csv
+
 1. Missing data
 i. 27/01/2015 5:10 to 5:15, 17:50 to 17:55, 16/04/2015 6:00 to 6:05 etc. ANGAS1 and ANGAS2
 ii. PTSTAN1 (Port Stanvac) data available from row 100801 12/01/2016 0:05 onwards
@@ -60,8 +58,8 @@ PTSTAN1		100799	85.157%
 3. Includes Playford B (PLAYB.AG) but this powerplant has been mothballed since 2012. In file, all entries are 0.
 4. Northern powerplant: full retirement in March 2016.
 
-COMPARISON WITH PRICE
-=====================
+# COMPARISON WITH PRICE
+
 1. Seems that AGL controlled power stations come online approximately 5 minutes before high spot prices or at the time of settlement. These are during times when the neighboring prices are low.
 
 Examples:
@@ -69,14 +67,14 @@ Examples:
 2. 11/11/2015 13:30 Demand: 1370.45 MWh, Price: $2388.72, Online: AGLHAL, ANGAS1, ANGAS2 
 3. 12/11/2015 9:00 Demand: 1343.14 MWh, Price: $2291.49, Online: AGLHAL, ANGAS1, ANGAS2 
 
-INTERPOLATION
-=============
+# INTERPOLATION
+
 1. Missing data in the wind combustion data was filled using linear interpolation via pandas.
 i. wind_data_sa_interpolated.csv: interpolated SA wind generation data
 ii. combustion_data_sa_interpolated.csv: interpolated SA combustion generation data
 
-PRINCIPAL COMPONENTS
-====================
+# PRINCIPAL COMPONENTS
+
 1. First two principal components group the windfarms coinciding with the
 AEMO classification:
 i. SOUTHERN: LKBONNY1, LKBONNY2, LKBONNY3, CNUNDAWF

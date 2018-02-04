@@ -1,7 +1,6 @@
-DUID List for SA
-================
-GAS
-===
+# DUID List for SA
+## GAS
+
 1. Pelican Point: PPCCGT
 2. Torrens Island: TORRA1, TORRA2, TORRA3, TORRA4, TORRB1, TORRB2, TORRB3, TORRB4
 3. Obsborn AG: OSB_AG
@@ -10,20 +9,17 @@ GAS
 6. Hallett: AGL_HAL
 7. Ladbroke Grove: LADBROK1, LADBROK2
 
-COAL
-====
+## COAL
 1. Playford B: PLAYB_AG
 2. Northern: NBS1, NBS2
 
-DIESEL
-======
+## DIESEL
 1. Port Lincoln: POR01, POR03
 2. Snuggery: SNUG1
 3. Angaston: ANGAS1, ANGAS2
 4. Port Stanvac: PTSTAN1
 
-WINDFARMS
-=========
+## WINDFARMS
 * Numbers that follow are the maximum registered capacity in MW
 
 1. The Bluff: BLUFF1, 52
@@ -44,8 +40,7 @@ WINDFARMS
 15. Waterloo: WATERLWF, 111
 16. Wattle Point: WPWF, 91
 
-NON-SCHEDULED
-=============
+## NON-SCHEDULED
 1. BlueLake: BLUELAKE1
 2. Hunter Economic Zone: HEZ
 3. Highbury Landfill: HIGHBRY1
